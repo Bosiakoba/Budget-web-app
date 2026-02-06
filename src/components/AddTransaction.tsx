@@ -1,12 +1,12 @@
 'use client'
 
-import React, { useState, useTransition } from 'react';
+import React, { useState } from 'react';
 import { useFormState } from 'react-dom';
-import { addTransaction } from '@/app/actions';
+import { addTransaction, FormState } from '@/app/actions';
 
-const initialState = {
+const initialState: FormState = {
   errors: {},
-  message: null,
+  message: '',
 };
 
 const AddTransaction = () => {
@@ -47,7 +47,8 @@ const AddTransaction = () => {
           <button type="button" onClick={() => setType('expense')} className={`w-full text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 ${type === 'expense' ? 'bg-red-600 ring-red-500' : 'bg-red-400'}`}>Expense</button>
         </div>
         <button type="submit" className="w-full bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500">Add Transaction</button>
-        {state.message && <p className="text-green-500 text-sm mt-2">{state.message}</p>}
+        {state.message && Object.keys(state.errors).length === 0 && <p className="text-green-500 text-sm mt-2">{state.message}</p>}
+        {state.message && Object.keys(state.errors).length > 0 && <p className="text-red-500 text-sm mt-2">{state.message}</p>}
       </form>
     </div>
   );
